@@ -48,7 +48,7 @@ def post_workers(url, headers, name_worker):
 	data_post = {
 		"name": name_worker,
 	}
-	response = requests.post(f"{url}/workers", headers=headers, json=data_post)
+	response = requests.post(f"{url}/worker", headers=headers, json=data_post)
 
 	print("Status Code", response.status_code)
 	print("JSON Response ", response.json())
