@@ -25,9 +25,9 @@ def handle_validation_error(error):
 if __name__ == "__main__":
     db.init_app(app)
     ma.init_app(app)
-    scheduler.add_job(
-        id='Scheduled Task', func=post_infosystem,
-        trigger="interval", seconds=10
-    )
-    scheduler.start()
+    #scheduler.add_job(
+    #    id='Scheduled Task', func=post_infosystem,
+    #    trigger="interval", seconds=10
+    #)
+    #scheduler.start()
     app.run(port=5000, debug=True)

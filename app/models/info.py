@@ -20,19 +20,17 @@ class InfoModel(db.Model):
     n_process = db.Column(db.Integer, nullable=False, default=np.random.randint(1, 600))
 
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
     worker_id = db.Column(db.Integer, db.ForeignKey("worker.id"), nullable=False)
 
     def __init__(
-        self, disk_available, using_ram, n_process, created, updated, worker_id
+        self, disk_available, using_ram, n_process, created,  worker_id
     ):
         # self.id = id
         self.disk_available = disk_available
         self.using_ram = using_ram
         self.n_process = n_process
         self.created = created
-        self.updated = updated
         self.worker_id = worker_id
 
     def __repr__(self):

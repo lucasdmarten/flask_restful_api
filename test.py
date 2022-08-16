@@ -9,7 +9,7 @@ app, api = create_app()
 app.config.update({
     "TESTING": True,
 })
-create_routes(api_test)
+create_routes(api)
 
 
 def test_list_worker(app_test):

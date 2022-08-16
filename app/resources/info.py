@@ -21,7 +21,6 @@ store = infosystem_endpoints.model(
         "using_ram": fields.Float("using_ram"),
         "n_process": fields.Integer("n_process"),
         "created": fields.DateTime("created"),
-        "updated": fields.DateTime("updated"),
         "worker_id": fields.Integer("worker_id"),
     },
 )
