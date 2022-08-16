@@ -8,7 +8,6 @@ from app.marshmallow import ma
 from app.routes import create_routes
 from app.scheduler import scheduler, post_infosystem
 
-
 app, api = create_app()
 create_routes(api)
 
