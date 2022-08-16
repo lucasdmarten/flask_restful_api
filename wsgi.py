@@ -1,10 +1,9 @@
 from flask import jsonify
 from marshmallow import ValidationError
-from app import create_app
 
+from app import create_app
 from app.database import db
 from app.marshmallow import ma
-
 from app.routes import create_routes
 from app.scheduler import scheduler, post_infosystem
 

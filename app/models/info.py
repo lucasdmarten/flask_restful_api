@@ -1,16 +1,22 @@
 from datetime import datetime
 from typing import List
-from app.database import db
+
 import numpy as np
 from pandas import to_datetime
+
+from app.database import db
 
 
 class InfoModel(db.Model):
     __tablename__ = "infosystem"
 
     id = db.Column(db.Integer, primary_key=True)
-    disk_available = db.Column(db.Float(precision=2), nullable=False, default=np.random.randint(1, 6))
-    using_ram = db.Column(db.Float(precision=2), nullable=False, default=np.random.randint(0, 100))
+    disk_available = db.Column(
+        db.Float(precision=2), nullable=False, default=np.random.randint(1, 6)
+    )
+    using_ram = db.Column(
+        db.Float(precision=2), nullable=False, default=np.random.randint(0, 100)
+    )
     n_process = db.Column(db.Integer, nullable=False, default=np.random.randint(1, 600))
 
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -44,17 +50,13 @@ class InfoModel(db.Model):
     def find_by_period(cls, init, end) -> List["InfoModel"]:
         date_fmt = "%Y-%m-%dT%H:%M:%S"
         init, end = datetime.strptime(init, date_fmt), datetime.strptime(end, date_fmt)
-        query = [data for data in cls.find_all() if (to_datetime(data.created)>=end) and (to_datetime(data.created)<=init)]
+        query = [
+            data
+            for data in cls.find_all()
+            if (to_datetime(data.created) >= end)
+            and (to_datetime(data.created) <= init)
+        ]
         return query
-
-    @classmethod
-    def find_by_period_test(cls, init, end) -> List["InfoModel"]:
-        print(cls.query.all())
-        #date_fmt = "%Y-%m-%dT%H:%M:%S"
-        #init, end = datetime.strptime(init, date_fmt), datetime.strptime(end, date_fmt)
-        #query = [data for data in cls.find_all() if
-                # (to_datetime(data.created) >= end) and (to_datetime(data.created) <= init)]
-        #return query
 
     def save_to_db(self) -> None:
         db.session.add(self)

@@ -1,16 +1,13 @@
 from flask import request
-
 from flask_restx import Namespace, Resource, fields
+
 from app.models.worker import WorkerModel
 from app.schemas.worker import WorkerSchema
-
 
 WORKER_NOT_FOUND = "Worker not found."
 WORKER_ALREADY_EXISTS = "Worker '{}' Already exists."
 
-worker_endpoint = Namespace(
-    "worker", description="worker info related operations"
-)
+worker_endpoint = Namespace("worker", description="worker info related operations")
 
 worker_schema = WorkerSchema()
 worker_list_schema = WorkerSchema(many=True)

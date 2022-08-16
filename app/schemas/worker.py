@@ -1,6 +1,7 @@
-from app.models.worker import WorkerModel
-from app.marshmallow import ma
 from app.database import db
+from app.marshmallow import ma
+from app.models.worker import WorkerModel
+
 
 class WorkerSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

@@ -1,10 +1,10 @@
-from flask_apscheduler import APScheduler
-import requests
-from numpy import random
 from datetime import datetime
 
+import flask_apscheduler as flask_scheduler
+import requests
+from numpy import random
 
-scheduler = APScheduler()
+scheduler = flask_scheduler.APScheduler()
 
 
 def post_infosystem(id_worker=6):
@@ -16,8 +16,6 @@ def post_infosystem(id_worker=6):
         "n_process": random.randint(1000),
         "created": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
         "updated": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-        "worker_id": id_worker
+        "worker_id": id_worker,
     }
-    requests.post(
-        f"{url}/{id_worker}", headers=headers, json=data_post
-    )
+    requests.post(f"{url}/{id_worker}", headers=headers, json=data_post)

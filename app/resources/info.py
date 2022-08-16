@@ -1,16 +1,14 @@
 from flask import request
 from flask_restx import Namespace, Resource, fields
+
 from app.models.info import InfoModel
 from app.models.worker import WorkerModel
 from app.schemas.info import InfoSchema
 
-
 INFO_NOT_FOUND = "Info not found."
 INFO_ALREADY_EXISTS = "Info '{}' Already exists."
 
-infosystem_endpoints = Namespace(
-    "infosystem", description="infos related operations"
-)
+infosystem_endpoints = Namespace("infosystem", description="infos related operations")
 
 info_schema = InfoSchema()
 infos_list_schema = InfoSchema(many=True)
