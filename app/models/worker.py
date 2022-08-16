@@ -1,7 +1,7 @@
 from typing import List
 
-from plugins.database import db
-from models.info import InfoModel
+from app.database import db
+from app.models.info import InfoModel
 
 
 class WorkerModel(db.Model):
@@ -18,11 +18,11 @@ class WorkerModel(db.Model):
         return "WorkModel(name=%s)" % self.name
 
     @classmethod
-    def find_by_name(cls, name) -> "WorkerModel":
+    def find_by_name(cls, name) -> List["WorkerModel"]:
         return cls.query.filter_by(name=name).first()
 
     @classmethod
-    def find_by_id(cls, _id) -> "WorkerModel":
+    def find_by_id(cls, _id) -> List["WorkerModel"]:
         return cls.query.filter_by(id=_id).first()
 
     @classmethod

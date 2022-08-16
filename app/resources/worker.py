@@ -1,32 +1,34 @@
 from flask import request
 
 from flask_restx import Namespace, Resource, fields
-from models.worker import WorkerModel
-from schemas.worker import WorkerSchema
+from app.models.worker import WorkerModel
+from app.schemas.worker import WorkerSchema
 
 
 WORKER_NOT_FOUND = "Worker not found."
 WORKER_ALREADY_EXISTS = "Worker '{}' Already exists."
 
-worker_ns = Namespace("worker", description="Worker related operations")
-workers_ns = Namespace("workers", description="Workers related operations")
+worker_endpoint = Namespace(
+    "worker", description="worker info related operations"
+)
 
 worker_schema = WorkerSchema()
 worker_list_schema = WorkerSchema(many=True)
 
 # Model required by flask_restx for expect
-store = worker_ns.model("Worker", {"name": fields.String("Name of the Worker")})
-
+store = worker_endpoint.model("Worker", {"name": fields.String("Name of the Worker")})
 
 
 class WorkerList(Resource):
-    @workers_ns.doc("Get all the Workers")
-    def get(self):
+    @staticmethod
+    @worker_endpoint.doc("Get all the Workers")
+    def get():
         return worker_list_schema.dump(WorkerModel.find_all()), 200
 
-    @workers_ns.expect(store)
-    @workers_ns.doc("Create a Worker")
-    def post(self):
+    @staticmethod
+    @worker_endpoint.expect(store)
+    @worker_endpoint.doc("Create a Worker")
+    def post():
         store_json = request.get_json()
         name = store_json["name"]
         if WorkerModel.find_by_name(name):

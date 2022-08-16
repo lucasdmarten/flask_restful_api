@@ -1,24 +1,22 @@
 from flask import request
-
 from flask_restx import Namespace, Resource, fields
-from models.info import InfoModel
-from models.worker import WorkerModel
-from schemas.info import InfoSchema
+from app.models.info import InfoModel
+from app.models.worker import WorkerModel
+from app.schemas.info import InfoSchema
 
-from datetime import datetime, timedelta
 
 INFO_NOT_FOUND = "Info not found."
 INFO_ALREADY_EXISTS = "Info '{}' Already exists."
 
-infos_ns = Namespace("infos", description="infos related operations")
-worker_info = Namespace("worker", description="worker info related operations")
-worker_by_date_info = Namespace("by_date", description="worker info related operations")
+infosystem_endpoints = Namespace(
+    "infosystem", description="infos related operations"
+)
 
 info_schema = InfoSchema()
 infos_list_schema = InfoSchema(many=True)
 
 # Model required by flask_restx for expect
-store = infos_ns.model(
+store = infosystem_endpoints.model(
     "Info",
     {
         "disk_available": fields.Float("disk_available"),
@@ -31,27 +29,17 @@ store = infos_ns.model(
 )
 
 
-class ListInfoWorker(Resource):
-    @staticmethod
-    def get(worker_id):
-        return infos_list_schema.dump(InfoModel.find_by_worker_id(worker_id)), 200
-
-
-class ByDateInfoWorker(Resource):
-    @staticmethod
-    def get(init, end):
-        data_query = InfoModel.find_by_period(init, end)
-        return infos_list_schema.dump(data_query), 200
-
-
 class InfoList(Resource):
-    @infos_ns.doc("Get all the Infos")
-    def get(self):
-        return infos_list_schema.dump(InfoModel.find_all()), 200
+    @staticmethod
+    @infosystem_endpoints.doc("Get all the Infos")
+    def get(worker_id):
+        data_object = InfoModel.find_by_worker_id(worker_id)
+        return infos_list_schema.dump(data_object), 200
 
-    @infos_ns.expect(store)
-    @infos_ns.doc("Create a Info")
-    def post(self):
+    @staticmethod
+    @infosystem_endpoints.expect(store)
+    @infosystem_endpoints.doc("Create a Info")
+    def post(worker_id):
         store_json = request.get_json()
 
         if not WorkerModel.find_by_id(store_json["worker_id"]):

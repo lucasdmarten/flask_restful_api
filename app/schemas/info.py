@@ -1,6 +1,6 @@
-from models.info import InfoModel
-from plugins.marshmallow import ma
-from plugins.database import db
+from app.models.info import InfoModel
+from app.marshmallow import ma
+from app.database import db
 
 
 class InfoSchema(ma.SQLAlchemyAutoSchema):
